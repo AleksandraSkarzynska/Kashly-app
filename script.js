@@ -1,2 +1,1 @@
-const titles={dashboard:'Dashboard finansowy',ai:'AI Insight',budgets:'Budżety',subs:'Subskrypcje',goals:'Cele oszczędnościowe',stats:'Statystyki',security:'Bezpieczeństwo'};
-document.querySelectorAll('.nav').forEach(btn=>{btn.addEventListener('click',()=>{const page=btn.dataset.page;document.querySelectorAll('.nav').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(page).classList.add('active');document.getElementById('page-title').textContent=titles[page];window.scrollTo({top:0,behavior:'smooth'});});});
+console.log('KASHLY demo działa');
