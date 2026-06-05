@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KASHLY — demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glow glow-1"></div><div class="glow glow-2"></div>
+  <header class="topbar">
+    <div class="brand"><div class="logo">K</div><div><strong>KASHLY</strong><span>Smarter Money Starts Here</span></div></div>
+    <nav><a href="#ai">AI</a><a href="#budgets">Budżety</a><a href="#subs">Subskrypcje</a><a href="#goals">Cele</a></nav>
+    <button class="btn">Zacznij</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="tag">Inteligentna aplikacja finansowa</p>
+        <h1>Twoje finanse, ale mądrzejsze</h1>
+        <p>KASHLY pomaga kontrolować wydatki, budżety, subskrypcje i cele oszczędnościowe w jednym miejscu.</p>
+        <div class="actions"><button class="btn">Demo aplikacji</button><button class="btn ghost">Zobacz funkcje</button></div>
+      </div>
+      <div class="phone">
+        <div class="phone-top">Cześć, Kasia! 👋</div>
+        <p>Dostępne środki</p><h2>12 540,50 zł</h2>
+        <div class="chart"></div>
+        <div class="grid-icons"><span>🏠</span><span>🛒</span><span>🎬</span><span>📊</span></div>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card" id="ai"><h3>🤖 Analiza AI</h3><p>AI wykrywa nadmierne wydatki i podpowiada, gdzie możesz oszczędzić.</p><button onclick="showTip()">Pokaż poradę AI</button><p id="tip" class="tip"></p></article>
+      <article class="card"><h3>📊 Podsumowanie miesiąca</h3><div class="donut"></div><p>Wydatki: <b>3 650 zł</b></p></article>
+      <article class="card" id="budgets"><h3>💰 Budżety</h3><div class="bar"><span style="width:71%"></span></div><p>Mieszkanie 71%</p><div class="bar"><span style="width:67%"></span></div><p>Jedzenie 67%</p><div class="bar"><span style="width:55%"></span></div><p>Zakupy 55%</p></article>
+      <article class="card" id="subs"><h3>🔔 Subskrypcje</h3><ul><li>Netflix — 29,99 zł</li><li>Spotify — 23,99 zł</li><li>Canva Pro — 49,99 zł</li></ul></article>
+      <article class="card" id="goals"><h3>🎯 Cele oszczędnościowe</h3><p>Wakacje 2024</p><div class="bar"><span style="width:53%"></span></div><p>4 250 / 8 000 zł</p></article>
+      <article class="card"><h3>🔐 Bezpieczeństwo</h3><ul><li>Szyfrowanie danych</li><li>Weryfikacja 2FA</li><li>Bezpieczne logowanie</li></ul></article>
+    </section>
+  </main>
+
+  <footer>© 2026 KASHLY — wersja demonstracyjna na zaliczenie</footer>
+  <script src="script.js"></script>
+</body>
+</html>
