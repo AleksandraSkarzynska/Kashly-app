@@ -1,42 +1,33 @@
-# KASHLY — aplikacja mobilna Android/iOS
+# KASHLY — wersja demonstracyjna
 
-Projekt aplikacji mobilnej przygotowany na podstawie prezentacji KASHLY: ciemny interfejs, neonowa zieleń, logo K, dashboard finansowy, AI insights, budżety, automatyczne oszczędzanie i cele.
+Podstawowa aplikacja demonstracyjna Android/iOS przygotowana na zaliczenie.
 
-## Technologie
-- Expo + React Native
-- Android i iOS z jednego kodu
-- Gotowe do wrzucenia na GitHub
+## Funkcje w demo
 
-## Uruchomienie lokalne
+- ekran startowy KASHLY,
+- dashboard finansowy,
+- analiza AI,
+- podsumowanie miesiąca,
+- budżety,
+- kontrola subskrypcji,
+- cele oszczędnościowe,
+- bezpieczeństwo,
+- statystyki,
+- dolna nawigacja.
+
+## Uruchomienie
+
+1. Zainstaluj Node.js.
+2. W terminalu wpisz:
+
 ```bash
 npm install
 npm start
 ```
-Następnie zeskanuj QR w aplikacji Expo Go albo uruchom:
-```bash
-npm run android
-npm run ios
-```
 
-## Publikacja w sklepach
-Do publikacji produkcyjnej użyj EAS Build:
-```bash
-npm install -g eas-cli
-eas login
-eas build:configure
-eas build --platform android
-eas build --platform ios
-```
-Uwaga: iOS wymaga konta Apple Developer, a Android konta Google Play Console.
+3. Zainstaluj aplikację Expo Go na telefonie.
+4. Zeskanuj kod QR z terminala/przeglądarki Expo.
 
-## GitHub
-1. Utwórz nowe repozytorium na GitHub.
-2. W folderze projektu uruchom:
-```bash
-git init
-git add .
-git commit -m "Initial KASHLY mobile app"
-git branch -M main
-git remote add origin https://github.com/TWOJ_LOGIN/kashly-mobile-app.git
-git push -u origin main
-```
+## Android/iOS
+
+Projekt jest przygotowany w Expo/React Native, więc można go później zbudować na Androida i iOS przez Expo/EAS Build.

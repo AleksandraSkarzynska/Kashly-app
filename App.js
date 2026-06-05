@@ -1,21 +1,118 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Svg, { Circle, Path, Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
-const green='#A6FF00', bg='#050807', card='#0E1510', muted='#94A394', border='#23311F';
-const W=Dimensions.get('window').width;
-function Logo(){return <View style={s.logo}><Text style={s.logoMark}>K</Text><Text style={s.logoText}>KASHLY</Text></View>}
-function Glow(){return <Svg height="180" width={W} style={s.glow}><Defs><LinearGradient id="g" x1="0" y1="0" x2="1" y2="1"><Stop offset="0" stopColor="#A6FF00" stopOpacity="0.6"/><Stop offset="1" stopColor="#00FF88" stopOpacity="0.05"/></LinearGradient></Defs><Path d={`M0 120 C ${W/3} 20, ${W/2} 210, ${W} 60 L ${W} 180 L 0 180 Z`} fill="url(#g)" opacity=".35"/></Svg>}
-function Onboarding({setScreen}){return <SafeAreaView style={s.safe}><StatusBar style="light"/><Glow/><View style={s.hero}><Logo/><Text style={s.h1}>Smarter Money <Text style={s.green}>Starts Here</Text></Text><Text style={s.p}>Twoje finanse pod kontrolą. AI analizuje, Ty oszczędzasz.</Text><TouchableOpacity onPress={()=>setScreen('home')} style={s.primary}><Text style={s.primaryText}>Zacznij teraz</Text></TouchableOpacity><TouchableOpacity style={s.secondary}><Text style={s.secondaryText}>Zaloguj się</Text></TouchableOpacity></View></SafeAreaView>}
-function Ring(){return <Svg height="150" width="150" viewBox="0 0 120 120"><Circle cx="60" cy="60" r="45" stroke="#1c281e" strokeWidth="16" fill="none"/><Circle cx="60" cy="60" r="45" stroke={green} strokeWidth="16" fill="none" strokeDasharray="185 283" strokeLinecap="round" transform="rotate(-90 60 60)"/><Circle cx="60" cy="60" r="45" stroke="#6948ff" strokeWidth="16" fill="none" strokeDasharray="55 283" strokeDashoffset="-185" strokeLinecap="round" transform="rotate(-90 60 60)"/><Circle cx="60" cy="60" r="45" stroke="#ffb321" strokeWidth="16" fill="none" strokeDasharray="38 283" strokeDashoffset="-240" strokeLinecap="round" transform="rotate(-90 60 60)"/><Text style={{position:'absolute'}}> </Text></Svg>}
-function Home({setScreen}){return <SafeAreaView style={s.safe}><ScrollView contentContainerStyle={s.scroll}><View style={s.top}><Text style={s.small}>Cześć, Aleks!</Text><Ionicons name="notifications-outline" size={24} color={green}/></View><View style={s.balance}><Text style={s.label}>Dostępne środki</Text><Text style={s.money}>12 540,50 zł</Text><Text style={s.delta}>+7,8% vs poprzedni miesiąc</Text></View><View style={s.quick}>{['Portfel','Budżety','Oszczędź','Plan'].map((x,i)=><TouchableOpacity key={x} onPress={()=>setScreen(['home','budget','save','goals'][i])} style={s.quickItem}><Ionicons name={['wallet-outline','pie-chart-outline','sparkles-outline','flag-outline'][i]} size={22} color={green}/><Text style={s.quickText}>{x}</Text></TouchableOpacity>)}</View><Section title="AI insight"><View style={s.ai}><MaterialCommunityIcons name="robot-happy-outline" size={34} color={green}/><View><Text style={s.cardTitle}>W tym miesiącu możesz oszczędzić 300 zł</Text><Text style={s.p}>Subskrypcje i jedzenie na mieście są wyższe niż zwykle.</Text></View></View></Section><Section title="Wydatki"><View style={s.row}><View><Text style={s.money2}>3 650 zł</Text><Text style={s.label}>85% planu</Text></View><Ring/></View></Section></ScrollView><Nav screen="home" setScreen={setScreen}/></SafeAreaView>}
-function Budget({setScreen}){const cats=[['Mieszkanie','1250 zł',.34],['Jedzenie','850 zł',.23],['Transport','400 zł',.11],['Rozrywka','350 zł',.10],['Inne','800 zł',.22]];return <SafeAreaView style={s.safe}><ScrollView contentContainerStyle={s.scroll}><Header title="Inteligentne budżety"/><Text style={s.p}>Twórz budżety i kontroluj wydatki w czasie rzeczywistym.</Text>{cats.map(c=><View style={s.budget} key={c[0]}><View style={s.budgetTop}><Text style={s.cardTitle}>{c[0]}</Text><Text style={s.amount}>{c[1]}</Text></View><View style={s.bar}><View style={[s.fill,{width:`${c[2]*100}%`}]}/></View></View>)}</ScrollView><Nav screen="budget" setScreen={setScreen}/></SafeAreaView>}
-function Save({setScreen}){return <SafeAreaView style={s.safe}><ScrollView contentContainerStyle={s.scroll}><Header title="Automatyczne oszczędzanie"/><View style={s.centerCard}><Ionicons name="shield-checkmark-outline" size={42} color={green}/><Text style={s.bigGreen}>+2 450 zł</Text><Text style={s.p}>Tyle KASHLY pomógłoby Ci odłożyć w tym roku.</Text><TouchableOpacity style={s.primary}><Text style={s.primaryText}>Ustaw cel</Text></TouchableOpacity></View>{['Zaokrąglanie płatności','Stałe przelewy na cel','AI wskazuje nadwyżki'].map(t=><Feature key={t} title={t}/>)}</ScrollView><Nav screen="save" setScreen={setScreen}/></SafeAreaView>}
-function Goals({setScreen}){return <SafeAreaView style={s.safe}><ScrollView contentContainerStyle={s.scroll}><Header title="Twoje cele, nasze wsparcie"/><View style={s.grid}>{['Ustalaj realne cele','Śledź postępy','Zyskuj wiedzę','Bądź zmotywowany'].map((t,i)=><View style={s.tile} key={t}><Ionicons name={['target-outline','bar-chart-outline','bulb-outline','people-outline'][i]} size={30} color={green}/><Text style={s.cardTitle}>{t}</Text></View>)}</View><View style={s.stats}><Text style={s.stat}>25 000+ użytkowników</Text><Text style={s.stat}>98% pozytywnych opinii</Text></View></ScrollView><Nav screen="goals" setScreen={setScreen}/></SafeAreaView>}
-function Feature({title}){return <View style={s.feature}><Ionicons name="checkmark-circle-outline" size={24} color={green}/><Text style={s.cardTitle}>{title}</Text></View>}
-function Header({title}){return <View style={s.header}><Text style={s.step}>KASHLY</Text><Text style={s.h2}>{title}</Text></View>}
-function Section({title,children}){return <View style={s.section}><Text style={s.sectionTitle}>{title}</Text>{children}</View>}
-function Nav({screen,setScreen}){let items=[['home','home-outline'],['budget','pie-chart-outline'],['save','sparkles-outline'],['goals','flag-outline']];return <View style={s.nav}>{items.map(([id,ic])=><TouchableOpacity onPress={()=>setScreen(id)} key={id} style={s.navItem}><Ionicons name={ic} size={24} color={screen===id?green:muted}/></TouchableOpacity>)}</View>}
-export default function App(){const [screen,setScreen]=useState('start');return screen==='start'?<Onboarding setScreen={setScreen}/>:screen==='home'?<Home setScreen={setScreen}/>:screen==='budget'?<Budget setScreen={setScreen}/>:screen==='save'?<Save setScreen={setScreen}/>:<Goals setScreen={setScreen}/>}
-const s=StyleSheet.create({safe:{flex:1,backgroundColor:bg},scroll:{padding:22,paddingBottom:96},glow:{position:'absolute',bottom:0},hero:{flex:1,justifyContent:'center',padding:28},logo:{marginBottom:28},logoMark:{fontSize:76,fontWeight:'900',color:green,lineHeight:80},logoText:{fontSize:38,fontWeight:'900',color:'white',letterSpacing:1},h1:{fontSize:38,fontWeight:'900',color:'white',lineHeight:44},h2:{fontSize:32,fontWeight:'900',color:'white',lineHeight:38},green:{color:green},p:{color:muted,fontSize:15,lineHeight:22},primary:{backgroundColor:green,borderRadius:18,padding:17,alignItems:'center',marginTop:24},primaryText:{fontWeight:'900',color:'#061006'},secondary:{borderColor:border,borderWidth:1,borderRadius:18,padding:16,alignItems:'center',marginTop:12},secondaryText:{color:'white',fontWeight:'700'},top:{flexDirection:'row',justifyContent:'space-between',alignItems:'center'},small:{color:'white',fontSize:18,fontWeight:'700'},balance:{backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:28,padding:22,marginTop:24},label:{color:muted},money:{fontSize:40,color:'white',fontWeight:'900',marginVertical:6},delta:{color:green},quick:{flexDirection:'row',gap:10,marginVertical:18},quickItem:{flex:1,backgroundColor:card,borderRadius:18,padding:12,alignItems:'center'},quickText:{color:'white',fontSize:12,marginTop:6},section:{backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:24,padding:18,marginTop:16},sectionTitle:{color:'white',fontWeight:'900',fontSize:20,marginBottom:12},ai:{flexDirection:'row',gap:14,alignItems:'center'},cardTitle:{color:'white',fontWeight:'800',fontSize:16},row:{flexDirection:'row',justifyContent:'space-between',alignItems:'center'},money2:{fontSize:31,color:'white',fontWeight:'900'},header:{marginTop:12,marginBottom:18},step:{color:green,fontWeight:'900',letterSpacing:2,marginBottom:6},budget:{backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:20,padding:16,marginTop:12},budgetTop:{flexDirection:'row',justifyContent:'space-between'},amount:{color:green,fontWeight:'900'},bar:{height:8,backgroundColor:'#182219',borderRadius:10,marginTop:14,overflow:'hidden'},fill:{height:8,backgroundColor:green,borderRadius:10},centerCard:{alignItems:'center',backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:26,padding:26,marginTop:15},bigGreen:{fontSize:42,fontWeight:'900',color:green,marginTop:8},feature:{flexDirection:'row',gap:12,alignItems:'center',backgroundColor:card,borderRadius:18,padding:16,marginTop:12},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},tile:{width:(W-56)/2,backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:22,padding:18,minHeight:135,justifyContent:'space-between'},stats:{backgroundColor:card,borderRadius:20,padding:18,marginTop:18},stat:{color:green,fontWeight:'900',marginVertical:4},nav:{position:'absolute',bottom:18,left:22,right:22,backgroundColor:'#0B110D',borderColor:border,borderWidth:1,borderRadius:28,flexDirection:'row',justifyContent:'space-around',padding:14},navItem:{paddingHorizontal:18}});
+import { Ionicons } from '@expo/vector-icons';
+
+const green = '#A6FF00';
+const bg = '#050807';
+const card = '#101715';
+const border = '#1F2B27';
+
+const categories = [
+  { name: 'Jedzenie', amount: 650, pct: 71, icon: 'fast-food-outline' },
+  { name: 'Transport', amount: 400, pct: 67, icon: 'car-outline' },
+  { name: 'Rozrywka', amount: 250, pct: 70, icon: 'game-controller-outline' },
+  { name: 'Zakupy', amount: 420, pct: 55, icon: 'bag-outline' },
+];
+
+const subs = [
+  { name: 'Netflix', price: '29,00 zł', icon: 'play-circle-outline' },
+  { name: 'Spotify', price: '19,99 zł', icon: 'musical-notes-outline' },
+  { name: 'Canva Pro', price: '49,99 zł', icon: 'color-palette-outline' },
+];
+
+function Header() {
+  return (
+    <View style={styles.header}>
+      <View>
+        <Text style={styles.hello}>Cześć, Kasia 👋</Text>
+        <Text style={styles.muted}>Twoje finanse pod kontrolą</Text>
+      </View>
+      <View style={styles.avatar}><Text style={styles.logo}>K</Text></View>
+    </View>
+  );
+}
+
+function Progress({ value }) {
+  return <View style={styles.progress}><View style={[styles.progressFill, { width: `${value}%` }]} /></View>;
+}
+
+function Welcome({ onStart }) {
+  return (
+    <SafeAreaView style={styles.safe}>
+      <StatusBar style="light" />
+      <View style={styles.welcome}>
+        <Text style={styles.bigLogo}>K</Text>
+        <Text style={styles.title}>KASHLY</Text>
+        <Text style={styles.subtitle}>Smarter Money Starts Here</Text>
+        <Text style={styles.description}>Analizuj wydatki, twórz budżety, kontroluj subskrypcje i oszczędzaj z pomocą AI.</Text>
+        <TouchableOpacity style={styles.primaryButton} onPress={onStart}>
+          <Text style={styles.primaryButtonText}>Zacznij teraz</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function Dashboard() {
+  return (
+    <ScrollView style={styles.screen} showsVerticalScrollIndicator={false}>
+      <Header />
+      <View style={styles.balanceCard}>
+        <Text style={styles.muted}>Dostępne środki</Text>
+        <Text style={styles.balance}>12 540,50 zł</Text>
+        <Text style={styles.positive}>+ 1 250 zł w porównaniu do poprzedniego miesiąca</Text>
+      </View>
+      <View style={styles.grid}>
+        <SmallCard icon="analytics-outline" title="AI Insight" value="420 zł" />
+        <SmallCard icon="wallet-outline" title="Budżety" value="4 aktywne" />
+        <SmallCard icon="notifications-outline" title="Alerty" value="2 nowe" />
+        <SmallCard icon="shield-checkmark-outline" title="Bezpieczeństwo" value="OK" />
+      </View>
+      <SectionTitle title="Podsumowanie miesiąca" />
+      <View style={styles.card}>
+        <Text style={styles.amount}>Wydatki: 3 650 zł</Text>
+        <Text style={styles.muted}>Największy wydatek: wakacje 2024 — 1 250 zł</Text>
+        <View style={styles.fakeChart}><View style={styles.chartBar1}/><View style={styles.chartBar2}/><View style={styles.chartBar3}/><View style={styles.chartBar4}/></View>
+      </View>
+    </ScrollView>
+  );
+}
+
+function SmallCard({ icon, title, value }) {
+  return <View style={styles.smallCard}><Ionicons name={icon} size={24} color={green}/><Text style={styles.smallTitle}>{title}</Text><Text style={styles.smallValue}>{value}</Text></View>;
+}
+
+function SectionTitle({ title }) { return <Text style={styles.sectionTitle}>{title}</Text>; }
+
+function AI() {
+  return <ScrollView style={styles.screen}><Header /><SectionTitle title="Inteligentna analiza AI" /><View style={styles.cardCenter}><Ionicons name="happy-outline" size={68} color={green}/><Text style={styles.amount}>Możesz zaoszczędzić 420 zł w tym miesiącu</Text><Text style={styles.mutedCenter}>AI wykryło większe wydatki na jedzenie i subskrypcje. Ogranicz je o 15%, aby szybciej osiągnąć cel.</Text></View><Insight text="Zrezygnuj z jednej nieużywanej subskrypcji."/><Insight text="Ustaw limit 600 zł na jedzenie poza domem."/><Insight text="Przenieś 300 zł automatycznie na oszczędności."/></ScrollView>;
+}
+function Insight({text}) { return <View style={styles.rowCard}><Ionicons name="sparkles-outline" color={green} size={22}/><Text style={styles.rowText}>{text}</Text></View>; }
+
+function Budgets() {
+  return <ScrollView style={styles.screen}><Header /><SectionTitle title="Budżety" />{categories.map((c) => <View style={styles.card} key={c.name}><View style={styles.rowBetween}><View style={styles.row}><Ionicons name={c.icon} color={green} size={22}/><Text style={styles.amountSmall}>{c.name}</Text></View><Text style={styles.muted}>{c.pct}%</Text></View><Text style={styles.muted}>{c.amount} zł wykorzystane</Text><Progress value={c.pct}/></View>)}<TouchableOpacity style={styles.secondaryButton}><Text style={styles.secondaryText}>+ Dodaj budżet</Text></TouchableOpacity></ScrollView>;
+}
+
+function Goals() {
+  return <ScrollView style={styles.screen}><Header /><SectionTitle title="Cele oszczędnościowe" /><Goal name="Wakacje 2024" saved="4 250 zł" target="8 000 zł" pct={53}/><Goal name="Nowy laptop" saved="2 150 zł" target="5 000 zł" pct={43}/><Goal name="Poduszka finansowa" saved="3 000 zł" target="10 000 zł" pct={30}/></ScrollView>;
+}
+function Goal({name,saved,target,pct}) { return <View style={styles.card}><View style={styles.rowBetween}><Text style={styles.amountSmall}>{name}</Text><Text style={styles.positive}>{pct}%</Text></View><Text style={styles.muted}>{saved} z {target}</Text><Progress value={pct}/></View>; }
+
+function More() {
+  return <ScrollView style={styles.screen}><Header /><SectionTitle title="Subskrypcje" />{subs.map(s => <View style={styles.rowCard} key={s.name}><Ionicons name={s.icon} color={green} size={24}/><View style={{flex:1}}><Text style={styles.rowText}>{s.name}</Text><Text style={styles.muted}>{s.price} miesięcznie</Text></View></View>)}<SectionTitle title="Bezpieczeństwo" /><View style={styles.card}><Text style={styles.check}>✓ Szyfrowanie danych aplikacji</Text><Text style={styles.check}>✓ Dwustopniowa weryfikacja</Text><Text style={styles.check}>✓ Kod PIN i Face ID</Text></View><SectionTitle title="Statystyki" /><View style={styles.card}><Text style={styles.amount}>Wydatki: 3 650 zł</Text><View style={styles.lineChart}><Text style={styles.chartLine}>▁▂▃▂▅▆█</Text></View></View></ScrollView>;
+}
+
+export default function App() {
+  const [started, setStarted] = useState(false);
+  const [tab, setTab] = useState('home');
+  if (!started) return <Welcome onStart={() => setStarted(true)} />;
+  const Screen = tab === 'home' ? Dashboard : tab === 'ai' ? AI : tab === 'budgets' ? Budgets : tab === 'goals' ? Goals : More;
+  return <SafeAreaView style={styles.safe}><StatusBar style="light" /><Screen /><View style={styles.nav}>{[
+    ['home','home-outline','Home'],['ai','sparkles-outline','AI'],['budgets','wallet-outline','Budżety'],['goals','flag-outline','Cele'],['more','grid-outline','Więcej']
+  ].map(item => <TouchableOpacity key={item[0]} style={styles.navItem} onPress={() => setTab(item[0])}><Ionicons name={item[1]} size={22} color={tab===item[0]?green:'#6F7772'}/><Text style={[styles.navText, tab===item[0] && {color:green}]}>{item[2]}</Text></TouchableOpacity>)}</View></SafeAreaView>;
+}
+
+const styles = StyleSheet.create({
+  safe:{flex:1,backgroundColor:bg}, screen:{flex:1,padding:18,backgroundColor:bg}, welcome:{flex:1,justifyContent:'center',alignItems:'center',padding:28,backgroundColor:bg}, bigLogo:{fontSize:96,fontWeight:'900',color:green}, title:{fontSize:42,fontWeight:'900',color:'#fff',letterSpacing:2}, subtitle:{fontSize:16,color:green,fontWeight:'700',marginTop:4}, description:{color:'#B9C3BD',textAlign:'center',marginTop:24,lineHeight:22}, primaryButton:{backgroundColor:green,borderRadius:16,paddingVertical:16,paddingHorizontal:44,marginTop:34}, primaryButtonText:{color:'#071008',fontWeight:'900',fontSize:16}, header:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginBottom:18}, hello:{color:'#fff',fontSize:24,fontWeight:'800'}, muted:{color:'#87918C',fontSize:13,marginTop:4}, mutedCenter:{color:'#A7B0AB',fontSize:14,marginTop:10,textAlign:'center',lineHeight:20}, avatar:{width:46,height:46,borderRadius:23,backgroundColor:'#172017',borderWidth:1,borderColor:green,alignItems:'center',justifyContent:'center'}, logo:{color:green,fontSize:28,fontWeight:'900'}, balanceCard:{backgroundColor:'#0B1512',borderColor:border,borderWidth:1,borderRadius:24,padding:22,marginBottom:14}, balance:{color:'#fff',fontSize:36,fontWeight:'900',marginTop:8}, positive:{color:green,fontSize:12,marginTop:8}, grid:{flexDirection:'row',flexWrap:'wrap',gap:12}, smallCard:{width:'48%',backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:18,padding:15}, smallTitle:{color:'#BFC8C2',marginTop:10}, smallValue:{color:'#fff',fontWeight:'800',marginTop:4}, sectionTitle:{color:'#fff',fontSize:22,fontWeight:'900',marginTop:24,marginBottom:12}, card:{backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:20,padding:18,marginBottom:12}, cardCenter:{backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:24,padding:24,alignItems:'center',marginBottom:14}, amount:{color:'#fff',fontSize:22,fontWeight:'900'}, amountSmall:{color:'#fff',fontSize:16,fontWeight:'800',marginLeft:8}, fakeChart:{height:92,flexDirection:'row',alignItems:'flex-end',gap:12,marginTop:18}, chartBar1:{height:35,width:34,backgroundColor:green,borderRadius:8}, chartBar2:{height:62,width:34,backgroundColor:green,borderRadius:8}, chartBar3:{height:48,width:34,backgroundColor:green,borderRadius:8}, chartBar4:{height:82,width:34,backgroundColor:green,borderRadius:8}, rowCard:{flexDirection:'row',alignItems:'center',gap:12,backgroundColor:card,borderColor:border,borderWidth:1,borderRadius:18,padding:16,marginBottom:10}, rowText:{color:'#fff',fontWeight:'700',fontSize:15}, rowBetween:{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}, row:{flexDirection:'row',alignItems:'center'}, progress:{height:8,backgroundColor:'#25312D',borderRadius:6,overflow:'hidden',marginTop:12}, progressFill:{height:'100%',backgroundColor:green,borderRadius:6}, secondaryButton:{borderColor:green,borderWidth:1,borderRadius:16,padding:15,alignItems:'center',marginBottom:24}, secondaryText:{color:green,fontWeight:'800'}, check:{color:'#DDE7E1',fontSize:15,marginBottom:8}, lineChart:{height:90,justifyContent:'center',alignItems:'center'}, chartLine:{color:green,fontSize:52,letterSpacing:4}, nav:{height:76,backgroundColor:'#080D0B',borderTopWidth:1,borderTopColor:border,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}, navItem:{alignItems:'center',justifyContent:'center'}, navText:{color:'#6F7772',fontSize:11,marginTop:4,fontWeight:'700'}
+});
